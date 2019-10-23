@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: faucet-controllers
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: faucet
+    spec:
+      containers:
+        - name: faucet-controller
+          image: faucet/faucet:latest
+          imagePullPolicy: Always
+          env:
+            - name: FAUCET_LOG
+              value: STDOUT
+            - name: FAUCET_EXCEPTION_LOG
+              value: STDOUT
+          ports:
+            - name: openflow
+              containerPort: 6653
+            - name: prometheus
+              containerPort: 9302
+          volumeMounts:
+          - name: faucet-controller-config
+            mountPath: /etc/faucet/faucet.yaml
+            subPath: faucet.yaml
+      volumes:
+        - name: faucet-controller-config
+          configMap:
+            name: faucet-config

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: faucet-lb-service
+spec:
+  ports:
+    - port: 6653
+      protocol: TCP
+      targetPort: openflow
+  selector:
+    app: faucet 
+  type: LoadBalancer

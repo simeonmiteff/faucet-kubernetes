@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: faucet-config
+data:
+  faucet.yaml: |
+    vlans:
+        office:
+            vid: 100
+            description: "office network"
+
+    dps:
+        sw1:
+            dp_id: 0x1
+            hardware: "Open vSwitch"
+            interfaces:
+                1:
+                    name: "host1"
+                    description: "host1 network namespace"
+                    native_vlan: office
+                2:
+                    name: "host2"
+                    description: "host2 network namespace"
+                    native_vlan: office
